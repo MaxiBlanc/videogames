@@ -4,6 +4,7 @@ const GetAllGames = require("../routes/videogames.con");
 const { API_KEY } = process.env;
 const axios = require("axios");
 const {Videogame , Genres} = require ('../db.js');
+const {DB_KEY} = process.env;
 const router = Router(); 
 
 
@@ -34,7 +35,7 @@ router.get("/videogames/:id", async (req, res) => {
     const id = req.params.id;
     if (id.length<10) {
       const ID = await axios.get(
-        `https://api.rawg.io/api/games/${id}?key=a00293488b2c45e682939739dd2ff8ca`
+        `https://api.rawg.io/api/games/${id}?key=${DB_KEY}`
       );
       const videogameInfo = {
         id: ID.data.id,
@@ -73,7 +74,7 @@ router.get("/videogames/:id", async (req, res) => {
 
   router.get('/genres', async (req, res) => {
     try{
-        const genresAPI = (await axios.get('https://api.rawg.io/api/genres?key=a00293488b2c45e682939739dd2ff8ca')).data.results
+        const genresAPI = (await axios.get(`https://api.rawg.io/api/genres?key=${DB_KEY}`)).data.results
        const AGenres = genresAPI.map(e => e.name) 
        AGenres.forEach(e => {
             Genres.findOrCreate({

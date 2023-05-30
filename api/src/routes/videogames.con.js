@@ -3,7 +3,7 @@ const { Router } = require('express');
 require ('dotenv').config();
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const { API_KEY } = process.env;
+const { DB_KEY } = process.env;
 const axios = require ('axios');
 const { Videogame, Genres } = require ('../db.js')
 const router = Router();
@@ -15,7 +15,7 @@ const ApiGames  = async () => {
     try {
     const arrGames = [];
     for (let i = 1; i < 6; i++){
-    const ApiUrl = `https://api.rawg.io/api/games?key=a00293488b2c45e682939739dd2ff8ca&page=${i}`;
+    const ApiUrl = `https://api.rawg.io/api/games?key=${DB_KEY}&page=${i}`;
     let Api = await axios.get(ApiUrl);
     Api.data.results.map (e => {
         arrGames.push({
